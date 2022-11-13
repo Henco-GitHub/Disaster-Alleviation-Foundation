@@ -1,0 +1,79 @@
+﻿@model List<users>
+@{
+    ViewData["Title"] = "Users List";
+}
+
+
+
+<br />
+<div class="main">
+
+    <center>
+        <h1>Admin Dashboard</h1>
+
+        <table>
+  <tr>
+        <td>User ID</td>
+        <td>Name</td>
+        <td>Surname</td>
+        <td>Age</td>
+        <td>Email</td>
+        <td>Password</td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.userID</td>
+            <td>@item.userName</td>
+            <td>@item.userSurname</td>
+            <td>@item.userAge</td>
+            <td>@item.userEmail</td>
+            <td>@item.userPassword</td>
+        </tr>
+    }
+
+
+</table>
+
+
+
+    </center>
+</div>
+
+
+
+
+
+<style>
+    .main {
+        background-color: white;
+    }
+
+    table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+

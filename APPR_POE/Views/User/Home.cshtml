@@ -1,0 +1,152 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    //check user
+    var role = Accessor.HttpContext.Session.GetString("auth");
+
+    if (role != "Approved")
+    {
+        Context.Response.Redirect("/User/Login/");
+    }
+
+}
+
+
+
+@{
+    Layout = "_LoggedInLayout";
+}
+
+
+<br />
+<center><h1 style="color: white">Hello, @Accessor.HttpContext.Session.GetString("userName")</h1>
+
+<br /><br />
+<div class="row">
+  <div class="column">
+    <div class="card" onclick="redirectToMonetaryDonations()">
+      <h3>Monetary Donations</h3>
+      <p>Donate and allocate <br /> money to a specific cause</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card" onclick="redirectToGoodsDonations()">
+      <h3>Goods Donations</h3>
+      <p>Donate and allocate <br /> goods to a specific cause</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card" onclick="redirectToCaptureDisaster()">
+      <h3>Disasters</h3>
+      <p>Record a new disaster to allocate <br /> monetary and goods donations to</p>
+    </div>
+  </div>
+</div>
+
+<br />
+  <div class="row">
+      <div class="column">
+        <div class="card" onclick="redirectToViewMonetary()">
+          <h3>View all monetary donations</h3>
+          <p>View all monetary donations so far</p>
+        </div>
+      </div>
+    
+
+
+    <div class="column">
+        <div class="card" onclick="redirectToViewGoods()">
+          <h3>View all goods donated</h3>
+          <p>View all the goods that users has collected so far</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card" onclick="redirectToViewDisasters()">
+          <h3>View all disasters recorded</h3>
+          <p>View all disasters that has been recorded by users so far</p>
+        </div>
+      </div>
+</div>
+</center>
+
+<style>
+   * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 33.3%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+    margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+  height: 350px;
+  border-radius: 25px;
+}
+
+.card:hover {
+	background-color: #808080;
+}
+
+
+</style>
+
+<script>
+
+function redirectToMonetaryDonations() {
+    window.location.href = "/Donations/ViewUserMonetary";
+}
+
+
+function redirectToGoodsDonations() {
+    window.location.href = "/Donations/ViewUserGoods";
+}
+
+function redirectToCaptureDisaster() {
+    window.location.href = "/Disaster/ViewUserDisasters";
+}
+
+function redirectToViewMonetary() {
+    window.location.href = "/View/ViewMonetary";
+}
+
+function redirectToViewGoods() {
+    window.location.href = "/View/ViewGoods";
+}
+
+function redirectToViewDisasters() {
+    window.location.href = "/View/ViewDisasters";
+}
+
+
+
+
+
+</script>

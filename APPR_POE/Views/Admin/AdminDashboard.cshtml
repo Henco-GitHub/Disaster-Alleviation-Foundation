@@ -1,0 +1,224 @@
+﻿@model List<users>
+@{
+    ViewData["Title"] = "Users List";
+}
+
+@{
+    Layout = "_AdminLayout";
+}
+
+
+
+
+
+<section>
+    <center><h2 style="color:white">Pending Users</h2></center>
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">User ID</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Name</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Surname</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Age</td>
+                    <td style="table-layout: fixed ; width: 35%;font-size: 16px;">Email</td>
+                    <td style="table-layout: fixed ; width: 25%;font-size: 16px;">Authorisation</td>
+                </tr>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+                @foreach (var item in Model.Where(d => d.userRole == "pending"))
+                {
+
+                    <tr>
+                        <td style="width: 10%;">@item.userID</td>
+                        <td style="width: 10%;">@item.userName</td>
+                        <td style="width: 10%;">@item.userSurname</td>
+                        <td style="width: 10%;">@item.userAge</td>
+                        <td style="width: 35%;">@item.userEmail</td>
+                        <td style="width: 25%;">
+                            <center>
+                                <div>
+                                    <form method="post" asp-action="Approve">
+                                        @Html.Hidden("userID", @item.userID)
+                                        <button id="btnApprove" class="btn btn-primary" style="width: 120px" type="submit">Approve</button>
+                                    </form>
+                                </div><br />
+                                <div>
+                                    <form method="post" asp-action="Reject">
+                                        @Html.Hidden("userID", @item.userID)
+                                        <button id="btnReject" class="btn btn-primary" style="width: 120px" type="submit">Reject</button>
+                                    </form>
+                                </div>
+                            </center>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+
+
+
+    <center><h2 style="color:white">Approved Users</h2></center>
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <th>
+                <tr>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">User ID</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Name</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Surname</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Age</td>
+                    <td style="table-layout: fixed ; width: 35%;font-size: 16px;">Email</td>
+                    <td style="table-layout: fixed ; width: 25%;font-size: 16px;">Authorisation</td>
+                </tr>
+            </th>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+                @foreach (var item in Model.Where(d => d.userRole == "Approved"))
+                {
+                    <tr>
+                        <td>@item.userID</td>
+                        <td>@item.userName</td>
+                        <td>@item.userSurname</td>
+                        <td>@item.userAge</td>
+                        <td>@item.userEmail</td>
+                        <td>
+                            <center>
+                                <form method="post" asp-action="Reject">
+                                    @Html.Hidden("userID", @item.userID)
+                                    <button id="btnReject" class="btn btn-primary" style="width: 120px" type="submit">Reject</button>
+                                </form>
+                            </center>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+
+
+
+    <center><h2 style="color:white">Rejected Users</h2></center>
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <th>
+                <tr>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">User ID</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Name</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Surname</td>
+                    <td style="table-layout: fixed ; width: 10%;font-size: 16px;">Age</td>
+                    <td style="table-layout: fixed ; width: 35%;font-size: 16px;">Email</td>
+                    <td style="table-layout: fixed ; width: 25%;font-size: 16px;">Authorisation</td>
+                </tr>
+            </th>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+                @foreach (var item in Model.Where(d => d.userRole == "Rejected"))
+                {
+                    <tr>
+                        <td>@item.userID</td>
+                        <td>@item.userName</td>
+                        <td>@item.userSurname</td>
+                        <td>@item.userAge</td>
+                        <td>@item.userEmail</td>
+                        <td>
+                            <center>
+                                <form method="post" asp-action="Approve">
+                                    @Html.Hidden("userID", @item.userID)
+                                    <button id="btnApprove" class="btn btn-primary" style="width: 120px" type="submit">Approve</button>
+                                </form>
+                            </center>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <center>
+        <button onclick="javascript:history.back()" class="btn btn-primary" style="width:150px">Back</button>
+    </center>
+</section>
+
+
+
+
+
+
+
+<style>
+
+
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .tbl-header {
+        background-color: rgba(255,255,255,0.3);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .tbl-content {
+        height: 200px;
+        overflow-x: auto;
+        margin-top: 0px;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    th {
+        padding: 20px 15px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 15px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 300;
+        font-size: 12px;
+        color: #fff;
+        border-bottom: solid 1px rgba(255,255,255,0.1);
+    }
+
+
+
+
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    section {
+        margin: 50px;
+    }
+
+
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+
+</style>

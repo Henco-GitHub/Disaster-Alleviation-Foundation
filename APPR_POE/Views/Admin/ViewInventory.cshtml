@@ -1,0 +1,206 @@
+﻿@using Microsoft.EntityFrameworkCore
+
+
+@{
+    Layout = "_AdminLayout";
+}
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<body onload=enable_text(false);>
+    <section style="width: 100%">
+
+        <h2 style="color:white;">
+            <button onclick="redirectToAllocate()" style="width: 140px; font-size: 12px; float:left; margin-right: 340px;" class="btn btn-primary"><i style="font-size: 14px;" class="bi bi-arrow-left-square"></i>&nbsp;&nbsp;Back</button>
+            Inventory
+            <button style="width: 140px; font-size: 12px; float:right; margin-right: 4px; background-color: green; border-color: green" class="btn btn-primary" data-toggle="modal" data-target="#purchase"><i style="font-size: 16px;" class="bi bi-plus-square"></i>&nbsp;&nbsp;Add to Inventory</button>
+        </h2>
+
+
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <td style="font-size: 16px;">Goods Category</td>
+                        <td style="font-size: 16px;">Items remaining</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                    @foreach (var item in ViewBag.inventory)
+                    {
+                        <tr>
+                            <td>@item.goodsCategory</td>
+                            <td>@item.goodsAmount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <form name="purchase" id="view_purchase" asp-action="AddToInventory" asp-controller="Admin">
+            <div id="purchase" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Purchase Goods: <content>&nbsp;&nbsp;</content> R @ViewBag.currentFunds remaining</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group, modalBody">
+                                @*Dropdown with list of goods categories*@
+
+
+                                <select class="selectList" id="goodsCategory" name="selectedGoods" onclick="document.getElementById('chkNewCategory').disabled=this.checked;">
+                                    <datalist id="categories">
+                                        @foreach (var categories in ViewBag.Categories)
+                                        {
+                                            <option value="@categories">@categories</option>
+                                        }
+                                    </datalist>
+                                </select>
+                                <br />
+                                <br />
+
+                                Define new category? <input type="checkbox" name=others onclick="enable_text(this.checked)">
+
+
+                                <input type="text" name="newCategoryOfGoods" class="form-control" onclick="document.getElementById('chkNewCategory').disabled=this.checked;" placeholder="Define new category of goods" />
+
+                                <br />
+                                <input type="text" name="newDesc" class="form-control" onclick="document.getElementById('chkNewCategory').disabled=this.checked;" placeholder="Describe the new category of goods" />
+
+                                <br />
+                                <input type="number" name="goodsAmount" class="form-control" required placeholder="Amount of items to purchase" min="1" />
+
+                                <br />
+                                <input type="number" name="itemCost" class="form-control" required placeholder="Cost per item (R)" min="1" />
+                                <br />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            @if (TempData["categoryExists"] != null)
+                            {
+                                <script type="text/javascript">
+                                    window.onload = function() {
+                                        alert("Category already exists");
+                                    };
+                                </script>
+                            }
+                            @if (TempData["insufficientFundsToPurchaseGoods"] != null)
+                            {
+                                <script type="text/javascript">
+                                    window.onload = function() {
+                                        alert("Insufficient funds to purchase these goods");
+                                    };
+                                </script>
+                            }
+                            <button form="view_purchase" type="submit" class="btn btn-primary"><i class="bi bi-wallet2"></i>&nbsp;&nbsp;Purchase</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        @if (ViewBag.Inserted != null && !ViewBag.Inserted)
+        {
+            <script type="text/javascript">
+                $(function() {
+                    $('#exampleModal').modal('show');
+                });
+            </script>
+        }
+
+
+    </section>
+</body>
+
+
+<style>
+
+    .modal {
+        
+    }
+
+    .modalBody {
+        color: black;
+    }
+
+
+    .modal-header {
+        background-color: #737C83;
+    }
+
+
+    section {
+        margin: 50px;
+    }
+
+    .selectList {
+        width: 100%;
+        height: 40px;
+    }
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .tbl-header {
+        background-color: rgba(255,255,255,0.3);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .tbl-content {
+        height: 600px;
+        overflow-x: auto;
+        margin-top: 0px;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    th {
+        padding: 20px 15px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 15px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 300;
+        font-size: 12px;
+        color: #fff;
+        border-bottom: solid 1px rgba(255,255,255,0.1);
+    }
+
+</style>
+
+<script>
+    function redirectToAllocate() {
+        window.location.href = "/Admin/Allocate";
+    }
+
+    function enable_text(status) {
+        status = !status;
+        document.purchase.newCategoryOfGoods.disabled = status;
+        document.purchase.newDesc.disabled = status;
+        document.purchase.selectedGoods.disabled = !status;
+    }
+
+</script>
