@@ -1,7 +1,39 @@
-# APPR_POE
+# Disaster Alleviation Foundation
 
+Web application built in Visual Studio 2022, using ASP.NET MVC 5. The application allows users to register and donate money and goods to the organisation, as well as
+record disasters to which donations can be allocated to - an admin user is able to allocate all donations to certain disasters of choice, based on the information 
+gathered, eg. via description, goods needed, etc. 
 
-##changes made from Part 2
+The admin user can either accept or reject a new (pending) user after user registration. The admin user can use donated money to buy goods that can be donated. 
+The admin user can view all goods donated, as well as records on cash flow in the organisation. 
+
+## Features
+### User
+
+- User login and registration
+- View public page
+- User can donate money
+- User can donate goods
+- User can record a new active disaster
+- View user monetary donations
+- View user goods donations
+- View user recorded disasters
+- View community monetary donations
+- View community goods donations
+- View community recorded disasters
+
+### Admin
+
+- View public page
+- Accept or reject pending users
+- View active disasters
+- Allocate money to a disaster
+- Allocate goods to a disaster
+- Purchase goods using available money from donations
+- View information on goods 
+- View cash flow 
+
+## changes made from Part 2
 -Added currency formatting to all amounts
 
 -On-load page changed from Login to Public page
@@ -13,7 +45,7 @@
 -Changed partial layouts to accompany the three different users in the system (change nav bar items)
 
 
-##changes made from Part 1
+## changes made from Part 1
 -Ensured that all number inputs cannot be 0 or less (Monetary and goods donations - from task 1)
 
 -Changed the order of the input fields in the goodsDonations form (Category before number of items to donate)
