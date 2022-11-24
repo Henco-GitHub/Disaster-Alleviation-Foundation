@@ -7,6 +7,15 @@ gathered, eg. via description, goods needed, etc.
 The admin user can either accept or reject a new (pending) user after user registration. The admin user can use donated money to buy goods that can be donated. 
 The admin user can view all goods donated, as well as records on cash flow in the organisation. 
 
+## User login details to use web app:
+### Admin
+- Email: admin@gmail.com
+- Password: admin
+
+### Regular user (that is approved by admin and can access site)
+- Email: user@gmail.com
+- Password: useruser
+
 ## Features
 ### User
 
